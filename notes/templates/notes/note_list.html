@@ -1,0 +1,52 @@
+{% extends "forum.html" %}
+{% load extra_tags_notes %}
+
+{% block menu_link %}
+<li><a href="{% url "note-add" %}">Add note</a></li>
+<li>-</li>
+<li><a href="{% url "forum-summary" %}">Back</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Notes</h1>
+
+<hr>
+
+<!-- Notes table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Note title</th>
+            <th>Creation date</th>
+            <th style="white-space: nowrap; width: 1%">Actions</th>
+            <th style="white-space: nowrap; width: 1%"></th>
+        </tr>
+    </thead>
+
+    {% for note in object_list %}
+    <tbody>
+        <tr class="{{ note.get_importance_class }}">
+            <td>{{ note.topic.title }}</td>
+            <td><a href="{% url 'note-detail' note.pk %}">{{ note.title }}</a></td>
+            <td>{{ note.created }}</td>
+
+            <!-- Buttons -->
+            <td><a href="{% url 'note-detail' note.pk %}" class="btn btn-default">Details</a></td>
+            <td><a href="{% url 'note-delete' note.pk %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+    </tbody>
+    {% empty %}
+    <tbody>
+        <tr>
+            <td>-</td>
+            <td>None notes yet.</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+    {% endfor %}    
+</table>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "forum.html" %}
+
+{% block menu_link %}
+    <li>
+        <a href="#" onclick="window.history.back(-1);">Back</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <h1>Topic deleting</h1>
+    <h3>Are you sure?</h3>
+    <p>You're about to delete topic <strong>{{ object }}</strong>. Please confirm.</p>
+    
+    {% if notes.count > 0 %}
+    <p><b>{{ notes.count }}</b> notes will be deleted as well.</p>
+    {% endif %}
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <input class="btn btn-link" type="button" value="Cancel" onclick="window.history.go(-1);"/>
+        <input class="btn btn-danger" type="submit" value="Confirm"/>
+    </form>
+{% endblock %}

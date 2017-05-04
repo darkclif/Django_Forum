@@ -1,0 +1,74 @@
+{% extends "forum.html" %}
+{% load extra_tags_topics %}
+{% load extra_tags_notes %}
+{% load mptt_tags %}
+
+{% block menu_link %}
+<li><a href="{% url "topic-add" %}">Add topic</a></li>
+<li><a href="{% url "note-add" %}">Add note</a></li>
+<li>-</li>
+<li><a href="{% url "forum-summary" %}">Back</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Forum</h1>
+
+<hr>
+
+<div class="tree">
+    <ul>
+        {% recursetree object_list %}
+        <li>
+            <!-- Topic header -->
+            <span style="border-width: 3px; display: block; background-color: {{ notes|get_topic_color:node.pk }}">
+                <span class="glyphicon glyphicon-book" aria-hidden="true" style="border: none"></span> 
+
+                <b>{{ node.title }}</b> ({{ notes|get_topic_notes:node.pk|length }})
+
+                <div style="width: 100%;text-align: right">
+                <a href="{% url 'topic-detail' node.pk %}">Details</a>
+                <a href="{% url 'topic-update' node.pk %}">Edit</a>
+                <a href="{% url 'topic-delete' node.pk %}">Delete</a>
+                </div>
+            </span>
+
+            <ul>
+                <!-- Nested topics -->
+                {% if not node.is_leaf_node %}
+                {{ children }}
+                {% endif %}
+                
+                <!-- Notes -->                
+                {% for note in notes|get_topic_notes:node.pk %}
+                <li>
+                	<span style="display: block; background-color: {{ note.get_importance_color }}">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true" style="border: none"></span> 
+                        
+                        {{ note.title }}
+                        
+                        <div style="width: 100%;text-align: right">
+                            <a href="{% url 'note-detail' note.pk %}">Details</a>
+                            <a href="{% url 'note-update' note.pk %}">Edit</a>
+                            <a href="{% url 'note-delete' note.pk %}">Delete</a>
+                        </div>
+                    </span>
+                </li>
+                {% empty %}
+                {% endfor %}
+
+            </ul>
+        </li>
+        {% endrecursetree %}        
+    </ul>
+</div>
+
+
+<script>
+    // Hide all notes on default
+    $( document ).ready(function() {
+        var children = $('.tree li.parent_li > span').parent('li.parent_li').find(' > ul > li');
+        children.hide('fast');
+        $('.tree li.parent_li > span').attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+    });
+</script>
+{% endblock %}

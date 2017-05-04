@@ -1,0 +1,25 @@
+{% extends "forum.html" %}
+{% load extra_tags_notes %}
+
+{% block menu_link %}
+<li><a href="{% url "note-update" note.pk %}">Update</a></li>
+<li><a href="{% url "note-delete" note.pk %}">Delete</a></li>
+<li>-</li>
+<li><a href="#" onclick="window.history.back(-1);">Back</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Note: "{{ note.title }}"</h1>
+
+<hr>
+
+<h4>Topic: "{{ note.topic }}" </h4>
+<h4>Status: {{ note.importance|get_importance_label|safe }} </h4>
+
+<hr>
+
+<div class="well">
+{{ note.body }}
+</div>
+
+{% endblock %}

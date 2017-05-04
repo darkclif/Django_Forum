@@ -1,0 +1,19 @@
+{% extends "forum.html" %}
+
+{% block menu_link %}
+<li><a href="#" onclick="window.history.back(-1);">Back</a></li>
+{% endblock %}
+
+
+{% block content %}
+<h1>Update or create topic</h1>
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <input type="submit" value="Submit" class="btn btn-default"/>
+</form>
+{% endblock %}

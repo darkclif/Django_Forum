@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+<!-- Page title -->
+{% block page_title %} Forum {% endblock %}
+
+<!-- Includes -->
+{% block head-include %}{% endblock %}
+
+<!-- Side menu -->
+{% block side_menu %}
+<li class="sidebar-brand"><a href="{% url "forum-summary" %}">Forum app</a></li>
+
+{% block menu_link%}
+{% endblock %}
+
+{% endblock%}
+
+<!-- Content -->
+{% block content %}
+<h1>
+    Test
+</h1>
+{% endblock %}

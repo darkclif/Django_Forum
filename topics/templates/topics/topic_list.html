@@ -1,0 +1,53 @@
+{% extends "forum.html" %}
+{% load extra_tags_topics %}
+{% load mptt_tags %}
+
+{% block menu_link %}
+<li><a href="{% url "topic-add" %}">Add topic</a></li>
+<li>-</li>
+<li><a href="{% url "forum-summary" %}">Back</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Topics</h1>
+
+<hr>
+
+<!-- Topics table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Topic title</th>
+            <th>Notes number</th>
+            <th>Creation date</th>
+            <th style="white-space: nowrap; width: 1%">Actions</th>
+            <th style="white-space: nowrap; width: 1%"></th>
+        </tr>
+    </thead>
+
+    {% for topic in object_list %}
+    <tbody>
+        <tr class="{{ notes|get_topic_class:topic.pk }}">
+            <td>{{ topic.title }}</td>
+            <td>{{ notes|get_topic_notes:topic.pk|length }}</td>
+            <td>{{ topic.created }}</td>
+
+            <!-- Buttons -->
+            <td><a href="{% url 'topic-detail' topic.pk %}" class="btn btn-default">Details</a></td>
+            <td><a href="{% url 'topic-delete' topic.pk %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+    </tbody>
+    {% empty %}
+    <tbody>
+        <tr>
+            <td>-</td>
+            <td>None notes yet.</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+    {% endfor %}    
+</table>
+
+{% endblock %}

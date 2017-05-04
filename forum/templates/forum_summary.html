@@ -1,0 +1,90 @@
+{% extends "forum.html" %}
+
+<!-- Page title -->
+{% block page_title %} Forum {% endblock %}
+
+<!-- Includes -->
+{% block head-include %}{% endblock %}
+
+<!-- Side menu -->
+{% block menu_link%}
+<li><a href="{% url "forum-tree" %}">Tree view</a></li>
+<li><a href="{% url "note-list" %}">Manage notes</a></li>
+<li><a href="{% url "topic-list" %}">Manage topics</a></li>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<h1>Forum summary</h1>
+
+<hr>
+
+<h1 class="text-center">Notes distress indicator: {{ distress_indicator }} %</h1>
+
+<hr>
+
+<h1>Note summary</h1>
+<table class="table table-bordered">
+    <!-- Headers -->
+    <thead>
+        <tr>
+            <th>Note type</th>
+            <th>Number</th>
+        </tr>
+    </thead>
+
+    <!-- Content -->
+    <tbody>
+        <tr class="danger">
+            <td>Red notes</td>
+            <td>{{ notes_red_count }}</td>
+        </tr>
+        <tr class="warning">
+            <td>Yellow notes</td>
+            <td>{{ notes_yellow_count }}</td>
+        </tr>
+        <tr class="success">
+            <td>Green notes</td>
+            <td>{{ notes_green_count }}</td>
+        </tr>
+        <tr>
+            <td><b>TOTAL</b></td>
+            <td>{{ notes.count }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!--
+<hr>
+
+<h1>Topic summary</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Topic type</th>
+            <th>Number</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr class="danger">
+            <td>Red notes</td>
+            <td>{{ topics_red_count }}</td>
+        </tr>
+        <tr class="warning">
+            <td>Yellow notes</td>
+            <td>{{ topics_yellow_count }}</td>
+        </tr>
+        <tr class="success">
+            <td>Green notes</td>
+            <td>{{ topics_green_count }}</td>
+        </tr>
+        <tr>
+            <td><b>TOTAL</b></td>
+            <td>{{ notes.count }}</td>
+        </tr>
+    </tbody>
+</table>-->
+
+{% endblock %}

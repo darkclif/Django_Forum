@@ -1,0 +1,20 @@
+{% extends "forum.html" %}
+
+{% block menu_link %}
+<li><a href="{% url "note-list" %}">Back</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Notes</h1>
+
+<hr>
+
+<h3>Are you sure?</h3>
+<p>You're about to delete '{{ object.title }}' note. Please confirm.</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <input class="btn btn-link" type="button" value="Cancel" onclick="window.history.go(-1);" />
+    <input class="btn btn-danger" type="submit" value="Confirm"/>    
+</form>
+
+{% endblock %}
